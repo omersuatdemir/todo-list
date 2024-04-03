@@ -6,7 +6,7 @@ import config from "../config.mjs";
 passport.serializeUser((user, done) => {
     console.log(user);
     console.log(`Welcome Back! > ${user.name} <`);
-    done(null, user.id);
+    return done(null, user.id);
 });
 
 passport.deserializeUser(async (id, done) => {
@@ -21,7 +21,7 @@ passport.deserializeUser(async (id, done) => {
 export default passport.use(new Strategy({
     clientID: config.googleClientID,
     clientSecret: config.googleAppSecret,
-    callbackURL: "http://localhost:3000/auth/google/redirect",
+    callbackURL: config.googleRedirectUrl,
     scope: ["profile", "email"]}, async (accesToken, refeshToken, profile, done) => {
         let user;
         try {
