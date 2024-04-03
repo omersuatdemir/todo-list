@@ -3,16 +3,10 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import passport from 'passport';
 import routers from '../routers/index.mjs';
+import { logMiddleware } from "../utils/middlewares.mjs";
 
 const app = express();
 
-// Custom Middlewares - Function Body
-const logMiddleware = ((req, res, next) => {
-    console.log(`${req.method} - ${req.url}`);
-    next();
-});
-
-// Built-in Middlewares
 app.use(express.json());
 app.use(cookieParser("Pi7utbj8EI"));
 app.use(session({
@@ -25,19 +19,15 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-
-// Custom Middlewares
 app.use(logMiddleware);
-
-//Routers
 app.use(routers);
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
-app.get('/', async (req, res) => {
-    res.send('hello world');
+app.get('/', async (request, response) => {
+    response.send('Welcome My Website...');
 });
 
 app.listen(PORT, () => {
-    console.log('Server is running on http://localhost:3000');
+    console.log(`Server has been started on this PORT ${PORT}!`);
 });
