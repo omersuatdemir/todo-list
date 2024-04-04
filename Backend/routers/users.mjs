@@ -1,9 +1,13 @@
 import { Router } from "express";
 import { checkSchema, validationResult, matchedData } from "express-validator";
 import passport from "passport";
+import crypto from "crypto";
 import { LocalUser } from "../mongoose/schemas/local-users.mjs";
+import { Token } from "../mongoose/schemas/tokens.mjs";
 import { UserValidation } from "../utils/validationSchemas.mjs";
 import { HashPassword } from "../utils/helpers.mjs";
+import { sendEmail } from "../utils/email-sender.mjs";
+import config from "../config.mjs";
 import "../strategies/local-strategy.mjs";
 import "../strategies/google-strategy.mjs";
 
@@ -43,6 +47,44 @@ router.post("/auth/logout", (request, response) => {
         if (err) return response.sendStatus(400);
         response.sendStatus(200);
     });
+});
+
+//Kullanıcının şifre sıfırlama bağlantısı "E-Mail" adresine gönderilir.
+router.post("/auth/reset-password", async (request, response) => {
+    const user = await LocalUser.findOne({ email: request.body.email });
+    if(!user) return response.sendStatus(400);
+    try {
+        const token = await new Token({
+            tokenID: crypto.randomBytes(32).toString("hex"),
+            userID: user.id,
+            userEMail: user.email,
+        }).save();
+        const message = `Hi ${user.email},\nClick to Reset your Password!!\nhttp://localhost:${config.PORT}/auth/user/reset-password/${user._id}/${token.tokenID}`;
+        await sendEmail(user.email, "Password Reset", message);
+        return response.status(201).send(`Password-Reset E-Mail Sent to ${user.email} !!`)
+    } catch (err) {
+        console.log(`Password Reset Failed!! ${err}`);
+        return response.sendStatus(400);
+    }
+});
+
+//Şifre sıfırlama bağlantısına tıklayan kullanıcı şifresini değiştirebilir.
+router.post("/auth/user/reset-password/:id/:token", async (request, response) => {
+    try {
+        const newPassword = HashPassword(request.body.password);
+        const user = await LocalUser.findOne({ _id: request.params.id });
+        if(!user) return response.status(400).send("User Not Found!!");
+        const token = await Token.findOne({ tokenID: request.params.token, userID: user._id });
+        if(!token) return response.status(400).send("Token Not Found!!");
+        await LocalUser.updateOne({ _id: user._id }, { $set: { password: newPassword } });
+        await Token.findOneAndDelete({ userID: user._id });
+        const message = `Hi ${user.email},\nYour Password has been Successfully Updated!!`;
+        await sendEmail(user.email, "Password-Reset Succesfully!", message);
+        return response.status(200).send("Password Reset Succesfully!!");
+    } catch (err) {
+        console.log(`Password Reset Failed!! ${err}`);
+        return response.status(400).send(err);
+    }
 });
 
 //Google ile kullanıcı girişi yapılmasını sağlar.
