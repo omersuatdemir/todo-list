@@ -4,7 +4,7 @@ import passport from "passport";
 import crypto from "crypto";
 import { LocalUser } from "../mongoose/schemas/local-users.mjs";
 import { Token } from "../mongoose/schemas/tokens.mjs";
-import { UserValidation } from "../utils/validationSchemas.mjs";
+import { UserValidation, PasswordValidation } from "../utils/validationSchemas.mjs";
 import { HashPassword } from "../utils/helpers.mjs";
 import { sendEmail } from "../utils/email-sender.mjs";
 import config from "../config.mjs";
@@ -68,9 +68,11 @@ router.post("/auth/reset-password", async (request, response) => {
     }
 });
 
-//Şifre sıfırlama bağlantısına tıklayan kullanıcı şifresini değiştirebilir.
-router.post("/auth/user/reset-password/:id/:token", async (request, response) => {
+//Şifre sıfırlama bağlantısına tıklayan kullanıcı şifresini belirlenen kouşllara uygun olarak değiştirebilir.
+router.post("/auth/user/reset-password/:id/:token", checkSchema(PasswordValidation), async (request, response) => {
     try {
+        const errors = validationResult(request);
+        if (!errors.isEmpty()) return response.status(400).json({ errors: errors.array() });
         const newPassword = HashPassword(request.body.password);
         const user = await LocalUser.findOne({ _id: request.params.id });
         if(!user) return response.status(400).send("User Not Found!!");
@@ -92,7 +94,8 @@ router.get("/auth/google", passport.authenticate("google"));
 
 //Google ile kullanıcı girişi yapıldıktan sonra yönlendirilen adres.
 router.get("/auth/google/redirect", passport.authenticate("google"), (request, response) => {
-    response.status(200).send(`Login with Google was successful!! Wellcome Back > ${request.user.name} <`);
+    //response.status(200).send(`Login with Google was successful!! Wellcome Back > ${request.user.name} <`);
+    return request.user ? response.send(request.user) : response.sendStatus(401);
 });
 
 export default router;
