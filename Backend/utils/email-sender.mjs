@@ -12,6 +12,7 @@ export const sendEmail = async (email, subject, text) => {
                 pass: config.emailSenderPass,
             },
         });
+
         await transporter.sendMail({
             from: config.emailSenderUser,
             to: email,
@@ -19,6 +20,7 @@ export const sendEmail = async (email, subject, text) => {
             text: text,
         });
         console.log("E-Mail Sent, Succesfully!!");
+        
     } catch (err) {
         console.log(`E-Mail NOT Sent!! \n${err}`);
     }

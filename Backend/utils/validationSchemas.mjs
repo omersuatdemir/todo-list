@@ -17,7 +17,7 @@ export const UserValidation = {
         },
         matches: {
             options: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,24}$/,
-            errorMessage: 'Password Must Contain at Least one uppercase letter, one lowercase letter, and one number!',
+            errorMessage: "Password Must Contain at Least One Uppercase Letter, One Lowercase Letter, and One Number!",
         },
     },
 };
@@ -36,7 +36,7 @@ export const PasswordValidation = {
         },
         matches: {
             options: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,24}$/,
-            errorMessage: 'Password Must Contain at Least one uppercase letter, one lowercase letter, and one number!',
+            errorMessage: "Password Must Contain at Least One Uppercase Letter, One Lowercase Letter, and One Number!",
         },
     },
 };

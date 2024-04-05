@@ -13,6 +13,7 @@ passport.deserializeUser(async (id, done) => {
     try {
         const user = await GoogleUser.findById(id);
         return user ? done(null, user) : done(null, null);
+
     } catch (err) {
         return done(err, null);
     }
@@ -26,9 +27,11 @@ export default passport.use(new Strategy({
         let user;
         try {
             user = await GoogleUser.findOne({ googleID: profile.id });
+
         } catch (err) {
             return done(err, null);
         }
+
         try {
             if(!user){
                 console.log(profile);
@@ -37,6 +40,7 @@ export default passport.use(new Strategy({
                 return done(null, savedUser);
             }
             return done(null, user);
+            
         } catch (err) {
             console.log(`Google Auth Error!\n${err}`);
             return done(err, null);
