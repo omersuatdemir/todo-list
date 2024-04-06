@@ -1,0 +1,110 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: linear-gradient(to bottom, #899CDD 14%, #8D9DDE 35%, #8C9DDE 52%, #9876BA 100%);
+  }
+
+  @font-face {
+    font-family: 'kameron';
+    src: url('./fonts/kameron.ttf') format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'chenla';
+    src: url('./fonts/Chenla.ttf') format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'Karla';
+    src: url('./fonts/Karla.ttf') format('truetype');
+  }
+  
+  .signupPart{
+    display: inline-block;
+    width: 28%;
+    height: 60vh;
+    margin-left: 36%;
+    margin-top: 24vh;
+    background-color: #FFFFFF;
+    border: 2px solid #D0D0D0;
+    border-radius: 25px;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.25);
+    user-select: none;
+  }
+
+  .Header{
+    display:flex;
+    justify-content: center;
+    font-size: 28px;
+    font-weight:900;
+    font-family: 'Karla', sans-serif;
+    color: #403F40;
+    margin-top: 10vh;
+  }
+
+  .loginInputBox1{
+    display: inline-block;
+    width: 64%;
+    height: 30px;
+    background-color: #FEFAFA;
+    color: #9B9999;
+    border: 1px solid #B4B4B4;
+    border-radius:5px; 
+    margin-left: 18%;
+    margin-top: 4vh;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.25);
+  }
+  
+  .loginInputBox2{
+    display: inline-block;
+    width: 64%;
+    height: 30px;
+    background-color: #FEFAFA;
+    color: #9B9999;
+    border: 1px solid #B4B4B4;
+    border-radius:5px;
+    margin-top: 2vh;
+    margin-left: 18%;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.25);
+  }
+
+  .loginInputBox3{
+    display: inline-block;
+    width: 64%;
+    height: 30px;
+    background-color: #FEFAFA;
+    color: #9B9999;
+    border: 1px solid #B4B4B4;
+    border-radius:5px;
+    margin-top: 2vh;
+    margin-left: 18%;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.25);
+  }
+
+  .grayLines{
+    display: inline-block;
+    width: 150px;
+    height: 0.5px;
+    background-color: #9A9999;
+    margin-left: 35px;
+    margin-top: 30px;
+    user-select: none;  
+    }
+
+    .orText{ /*"Or yazısı" için özellikler */
+        font-family: 'kameron', sans-serif;
+        font-size: 21px;
+        margin-left: 10px;
+        color: #AAA6A6;
+        user-select: none;
+    }
+  
+    .signUpText{
+        font-family: chenla, sans-serif;
+        font-size: 14px;
+        margin-top: 3px;
+        user-select: none;
+       }
+  
+
