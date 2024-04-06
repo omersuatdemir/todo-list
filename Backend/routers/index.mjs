@@ -1,13 +1,10 @@
 import { Router } from "express";
-/*import userRouter from './users.mjs'
-import productRouter from './products.mjs';
-import authRouter from "./auths.mjs";*/
+import userRouter from "./users.mjs";
+import noteRouter from "./notes.mjs";
 
 const router = Router();
 
-//Routers
-/*router.use(userRouter);
-router.use(productRouter);
-router.use(authRouter);*/
+router.use(userRouter);
+router.use(noteRouter);
 
 export default router;

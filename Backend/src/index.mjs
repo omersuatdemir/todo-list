@@ -1,11 +1,17 @@
-import express from 'express';
-import cookieParser from 'cookie-parser';
-import session from 'express-session';
-import passport from 'passport';
-import routers from '../routers/index.mjs';
+import express from "express";
+import cookieParser from "cookie-parser";
+import session from "express-session";
+import passport from "passport";
+import mongoose from "mongoose";
+import MongoStore from "connect-mongo";
+import routers from "../routers/index.mjs";
+import config from "../config.mjs";
 import { logMiddleware } from "../utils/middlewares.mjs";
 
 const app = express();
+const PORT = config.PORT;
+
+mongoose.connect(config.mongooseConnectionString).then(() => console.log("Connected to MongoDB!!")).catch((err) => console.log(`DB-ERROR: ${err}`));
 
 app.use(express.json());
 app.use(cookieParser("Pi7utbj8EI"));
@@ -15,19 +21,19 @@ app.use(session({
     resave: false,
     cookie: {
         maxAge: 1000 * 60 * 60 * 24
-    }
+    },
+    store: MongoStore.create({
+        client: mongoose.connection.getClient()
+    })
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(logMiddleware);
 app.use(routers);
 
-const PORT = 3000;
+app.listen(PORT, () => { console.log(`Server has been started on this PORT ${PORT}!`); });
 
 app.get('/', async (request, response) => {
-    response.send('Welcome My Website...');
-});
-
-app.listen(PORT, () => {
-    console.log(`Server has been started on this PORT ${PORT}!`);
+    response.send("Welcome My Website's Darkside...");
 });
