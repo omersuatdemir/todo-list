@@ -2,7 +2,7 @@ import { Router } from "express";
 import { checkSchema, validationResult, matchedData } from "express-validator";
 import passport from "passport";
 import crypto from "crypto";
-import { LocalUser } from "../mongoose/schemas/local-users.mjs";
+import { MainUser } from "../mongoose/schemas/main-users.mjs";
 import { Token } from "../mongoose/schemas/tokens.mjs";
 import { UserValidation, PasswordValidation } from "../utils/validationSchemas.mjs";
 import { HashPassword } from "../utils/helpers.mjs";
@@ -15,6 +15,8 @@ const router = Router();
 
 //Aktif kullanıcı varsa kullanıcı bilgilerini gösterir yoksa hata verir.
 router.get("/auth", (request, response) => {
+    console.log(request.sessionID);
+    console.log(request.user);
     return request.user ? response.send(request.user) : response.sendStatus(401);
 });
 
@@ -26,7 +28,7 @@ router.post("/auth/register", checkSchema(UserValidation), async (request, respo
     const data = matchedData(request);
     data.password = HashPassword(data.password);
     console.log(data);
-    const newUser = new LocalUser(data);
+    const newUser = new MainUser(data);
 
     try {
         const savedUser = await newUser.save();
@@ -49,14 +51,15 @@ router.post("/auth/logout", (request, response) => {
 
     request.logOut((err) => {
         if (err) return response.sendStatus(400);
-
+        
+        response.clearCookie("connect.sid");
         return response.sendStatus(200);
     });
 });
 
 //Kullanıcının şifre sıfırlama bağlantısı "E-Mail" adresine gönderilir.
 router.post("/auth/reset-password", async (request, response) => {
-    const user = await LocalUser.findOne({ email: request.body.email });
+    const user = await MainUser.findOne({ email: request.body.email });
     if(!user) return response.sendStatus(400);
 
     try {
@@ -83,14 +86,14 @@ router.post("/auth/user/reset-password/:id/:token", checkSchema(PasswordValidati
         if (!errors.isEmpty()) return response.status(400).json({ errors: errors.array() });
         
         const newPassword = HashPassword(request.body.password);
-        const user = await LocalUser.findOne({ _id: request.params.id });
+        const user = await MainUser.findOne({ _id: request.params.id });
         if(!user) return response.status(400).send("User Not Found!!");
 
         const token = await Token.findOne({ tokenID: request.params.token, userID: user._id });
 
         if(!token) return response.status(400).send("Token Not Found!!");
 
-        await LocalUser.updateOne({ _id: user._id }, { $set: { password: newPassword } });
+        await MainUser.updateOne({ _id: user._id }, { $set: { password: newPassword } });
         await Token.findOneAndDelete({ userID: user._id });
 
         const message = `Hi ${user.email},\nYour Password has been Successfully Updated!!`;
