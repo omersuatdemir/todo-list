@@ -3,10 +3,6 @@ import loginButtonImg from './images/loginbutton.png';
 import googleIcon from './images/googleicon.png';
 import { Link } from 'react-router-dom';
 
-
-
-
-
 function LoginPage() {
     return (
       <div className='loginPart'>

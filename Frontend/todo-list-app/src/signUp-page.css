@@ -23,7 +23,7 @@ body, html {
   .signupPart{
     display: inline-block;
     width: 28%;
-    height: 60vh;
+    height: 65vh;
     margin-left: 36%;
     margin-top: 24vh;
     background-color: #FFFFFF;
@@ -34,17 +34,18 @@ body, html {
   }
 
   .Header{
-    display:flex;
+    display:inline-block;
     justify-content: center;
     font-size: 28px;
     font-weight:900;
     font-family: 'Karla', sans-serif;
     color: #403F40;
-    margin-top: 10vh;
+    margin-top: 0vh;
   }
 
   .loginInputBox1{
-    display: inline-block;
+    display: flex;
+    justify-content: center;
     width: 64%;
     height: 30px;
     background-color: #FEFAFA;
@@ -52,7 +53,6 @@ body, html {
     border: 1px solid #B4B4B4;
     border-radius:5px; 
     margin-left: 18%;
-    margin-top: 4vh;
     box-shadow: 0 4px 5px rgba(0, 0, 0, 0.25);
   }
   
@@ -103,7 +103,6 @@ body, html {
     .signUpText{
         font-family: chenla, sans-serif;
         font-size: 14px;
-        margin-top: 3px;
         user-select: none;
        }
   
