@@ -1,6 +1,6 @@
 import passport from "passport";
 import { Strategy } from "passport-local";
-import { LocalUser } from "../mongoose/schemas/local-users.mjs";
+import { MainUser } from "../mongoose/schemas/main-users.mjs";
 import { ComparePassword } from "../utils/helpers.mjs";
 
 passport.serializeUser((user, done) => {
@@ -11,7 +11,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
     try {
-        const user = await LocalUser.findById({ _id: id });
+        const user = await MainUser.findById({ _id: id });
         if(!user) throw new Error("User Not Found!");
         return done(null, user);
 
@@ -24,7 +24,7 @@ passport.deserializeUser(async (id, done) => {
 export default passport.use(
     new Strategy({ usernameField: "email" }, async (email, password, done) => {
         try {
-            const user = await LocalUser.findOne({ email });
+            const user = await MainUser.findOne({ email: email });
             if(!user) throw new Error("User Not Found!");
 
             if(!ComparePassword(password, user.password)) throw new Error("Bad Credentials!");

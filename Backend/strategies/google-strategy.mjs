@@ -1,6 +1,8 @@
 import passport from "passport";
 import { Strategy } from "passport-google-oauth20";
-import { GoogleUser } from "../mongoose/schemas/google-users.mjs";
+import { MainUser } from "../mongoose/schemas/main-users.mjs";
+import crypto from "crypto";
+import { HashPassword } from "../utils/helpers.mjs";
 import config from "../config.mjs";
 
 passport.serializeUser((user, done) => {
@@ -11,7 +13,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
     try {
-        const user = await GoogleUser.findById(id);
+        const user = await MainUser.findById(id);
         return user ? done(null, user) : done(null, null);
 
     } catch (err) {
@@ -26,7 +28,8 @@ export default passport.use(new Strategy({
     scope: ["profile", "email"]}, async (accesToken, refeshToken, profile, done) => {
         let user;
         try {
-            user = await GoogleUser.findOne({ googleID: profile.id });
+            user = await MainUser.findOne({ email: profile.emails[0].value });
+            if(user) if(!user.googleID) await MainUser.updateOne({ googleID: profile.id, name: profile.displayName });
 
         } catch (err) {
             return done(err, null);
@@ -35,7 +38,7 @@ export default passport.use(new Strategy({
         try {
             if(!user){
                 console.log(profile);
-                const newUser = new GoogleUser({ googleID: profile.id, name: profile.displayName, email: profile.emails[0].value });
+                const newUser = new MainUser({ googleID: profile.id, name: profile.displayName, email: profile.emails[0].value, password: HashPassword(crypto.randomBytes(12).toString("hex")) });
                 const savedUser = await newUser.save();
                 return done(null, savedUser);
             }
