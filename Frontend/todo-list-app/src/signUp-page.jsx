@@ -14,7 +14,7 @@ function SignUpPage() {
         <div className='loginInputBox2'><p style={{marginTop: '7px', marginLeft: '7px', userSelect: 'all'}}>Password</p></div> 
         <div className='loginInputBox3'><p style={{marginTop: '7px', marginLeft: '7px', userSelect: 'all'}}>Password(Again)</p></div> 
 
-        <a href="/login" id='login'><img src={loginButtonImg} alt='Login Button' style={{display: 'inline-block',boxShadow:'0px 4px 10px rgba(0, 0, 0, 0.25)' , width: '35px', height: '35px', marginTop: '10px', marginLeft: '74%'}}></img></a>
+        <a href="/user" id='signup'><img src={loginButtonImg} alt='Login Button' style={{display: 'inline-block',borderRadius: '50%', boxShadow: '0 4px 5px rgba(0, 0, 0, 0.25)', width: '35px', height: '35px', marginTop: '10px', marginLeft: '74%'}}></img></a>
 
         <div style={{ display: 'flex', height: '50px' }}>
         <div className='grayLines'></div>

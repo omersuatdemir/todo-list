@@ -14,7 +14,7 @@ function LoginPage() {
 
         <div style={{display: 'flex'}}>
         <a href='/forgotpassword' id='forgotpassword'><p style={{display:"inline-block", marginLeft: '180px', fontFamily: 'chenla', fontSize: '14px', color: '#6C6775'}}>Forgot your password?</p></a>
-        <a href="/login" id='login'><img src={loginButtonImg} alt='Login Button' style={{display: 'inline-block',boxShadow:'0px 4px 10px rgba(0, 0, 0, 0.25)' ,marginTop: '15px' ,marginLeft: '5px', width: '35px', height: '35px' }}></img></a>
+        <a href="/user" id='login'><img src={loginButtonImg} alt='Login Button' style={{display: 'inline-block',borderRadius: '50%', boxShadow: '0 4px 5px rgba(0, 0, 0, 0.25)',marginTop: '15px' ,marginLeft: '5px', width: '35px', height: '35px' }}></img></a>
         </div> 
 
         <div style={{ display: 'flex', height: '50px' ,paddingTop: '0px'}}>

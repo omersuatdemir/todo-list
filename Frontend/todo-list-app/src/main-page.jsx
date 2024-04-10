@@ -5,7 +5,7 @@ import logoutbuttonImg from './images/logoutbutton.png';
 function MainPage(){
 return(
 <>
-<a href='/login' id='logout' style={{textDecoration:'none'}}><div style={{display: 'flex', marginLeft:'95%'}}>
+<a href='/' id='logout' style={{textDecoration:'none'}}><div style={{display: 'flex', marginLeft:'95%'}}>
 <p className='topBarFont'>Logout</p>
 <img src= {logoutbuttonImg} style={{width:'22px', height: '22px', marginTop:'15px', display:'inline-block'}}></img>
 </div>
