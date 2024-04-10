@@ -33,7 +33,3 @@ app.use(logMiddleware);
 app.use(routers);
 
 app.listen(PORT, () => { console.log(`Server has been started on this PORT ${PORT}!`); });
-
-app.get('/', async (request, response) => {
-    response.send("Welcome My Website's Darkside...");
-});
