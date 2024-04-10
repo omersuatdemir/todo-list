@@ -1,0 +1,60 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #899CDD 14%, #8D9DDE 35%, #8C9DDE 52%, #9876BA 100%);
+    max-height: 100vh;
+    overflow-y: auto;
+    user-select: none;
+    max-width: 100%;
+    overflow-x: auto;
+
+  }
+
+  @font-face {
+    font-family: 'Inter';
+    src: url('./fonts/Inter.ttf') format('truetype');
+  }
+  
+  .topLine{
+    max-width: 100%;
+    overflow-x: auto;
+    height: 0px;
+    border: 1px solid rgba(91, 96, 103, 0.5);
+
+
+  }
+
+  .topBarFont{
+    display: inline-block;
+    font-family: Inter sans-serif;
+    font-size: 18px;
+    color: #29313F;
+
+  }
+
+  .NotesPart {
+    display: inline-block;
+    width: 40%; 
+    height: 60vh;
+    background-color: #E8DAEB;
+    border-radius: 10px;
+    margin-left: 30%;
+    user-select: none;
+  }
+
+  .addNoteBox{
+    display: inline-block;
+    width: 40%;
+    height: 4vh;
+    background-color: #FFFCFC;
+    border: 1px solid #A2A2A2;
+    border-radius: 7px;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.25);
+    margin-left: 30%;
+    user-select: none;
+    padding-bottom: 25px;
+
+    
+
+  }
+  
