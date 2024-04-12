@@ -15,7 +15,7 @@ const TODONotesSchema = new mongoose.Schema({
     },
     addedAt: {
         type: mongoose.Schema.Types.Date,
-        default: () => new Date(Date.now() + (3 * 60 * 60 * 1000)),
+        default: () => new Date(Date.now() + (1000 * 60 * 60 * 3)),
     },
     editedAt: {
         type: mongoose.Schema.Types.Date,
